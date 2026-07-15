@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevClub — A Escola das Profissões do Futuro</title>
+  <meta name="description" content="DevClub: Transforme sua carreira com formações em Fullstack, Front-end, Back-end, Mobile e MBA em Tecnologia.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ============================================
+       RESET E VARIÁVEIS
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --green: #4ADE80;
+      --green-dark: #22C55E;
+      --purple: #6B21A8;
+      --purple-dark: #581C87;
+      --purple-deep: #3B0764;
+      --bg-dark: #0A0612;
+      --bg-card: #1A0B2E;
+      --bg-card-hover: #241040;
+      --text: #FFFFFF;
+      --text-muted: rgba(255, 255, 255, 0.7);
+      --text-dim: rgba(255, 255, 255, 0.5);
+      
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      --font-sans: 'Inter', sans-serif;
+      
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ============================================
+       LOGO SVG DO DEVCLUB
+       ============================================ */
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      background: rgba(10, 6, 18, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(107, 33, 168, 0.2);
+      transition: all 0.3s var(--ease);
+    }
+
+    .header.scrolled {
+      padding: 0.75rem 0;
+      background: rgba(10, 6, 18, 0.95);
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .nav-list {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.5rem 0.875rem;
+      border-radius: 8px;
+      transition: all 0.3s var(--ease);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--green);
+      background: rgba(74, 222, 128, 0.08);
+    }
+
+    .nav-link.active {
+      color: var(--green);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-login {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      transition: color 0.3s var(--ease);
+    }
+
+    .btn-login:hover { color: var(--green); }
+
+    .btn-matricula {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--green);
+      color: var(--bg-dark);
+      font-size: 0.875rem;
+      font-weight: 700;
+      border-radius: 8px;
+      transition: all 0.3s var(--ease);
+    }
+
+    .btn-matricula:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 28px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s var(--ease);
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      min-height: 100vh;
+      padding: 8rem 0 4rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(107, 33, 168, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(74, 222, 128, 0.15) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(74, 222, 128, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 222, 128, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+      z-index: -1;
+    }
+
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-logo {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(107, 33, 168, 0.3);
+      border: 1px solid var(--purple);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--green);
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-mono);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .green {
+      color: var(--green);
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 540px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.75rem;
+      background: var(--green);
+      color: var(--bg-dark);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      border-radius: 8px;
+      transition: all 0.3s var(--ease);
+    }
+
+    .btn-primary:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.75rem;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border: 1px solid rgba(74, 222, 128, 0.4);
+      border-radius: 8px;
+      transition: all 0.3s var(--ease);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--green);
+      background: rgba(74, 222, 128, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Visual do Hero - cards flutuantes */
+    .hero-visual {
+      position: relative;
+      height: 500px;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      background: rgba(26, 11, 46, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(107, 33, 168, 0.3);
+      border-radius: 16px;
+      padding: 1.5rem;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-float-card.card-1 {
+      top: 0;
+      right: 0;
+      width: 280px;
+      animation-delay: 0s;
+    }
+
+    .hero-float-card.card-2 {
+      top: 150px;
+      left: 0;
+      width: 240px;
+      animation-delay: -2s;
+    }
+
+    .hero-float-card.card-3 {
+      bottom: 50px;
+      right: 50px;
+      width: 260px;
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .float-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .float-card-dots {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .float-card-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .float-card-dots span:nth-child(1) { background: #FF5F57; }
+    .float-card-dots span:nth-child(2) { background: #FEBC2E; }
+    .float-card-dots span:nth-child(3) { background: #28C840; }
+
+    .float-card-code {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .float-card-code .kw { color: var(--green); font-weight: 600; }
+    .float-card-code .str { color: #34D399; }
+    .float-card-code .prop { color: #A78BFA; }
+
+    .float-stat {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .float-stat-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .float-stat-value {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+    }
+
+    .float-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .float-notif {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .float-notif-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(74, 222, 128, 0.15);
+      color: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .float-notif-title {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .float-notif-text {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* ============================================
+       BARRA DE EMPRESAS
+       ============================================ */
+    .companies-bar {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(107, 33, 168, 0.2);
+      border-bottom: 1px solid rgba(107, 33, 168, 0.2);
+    }
+
+    .companies-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .companies-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .companies-rating .stars {
+      color: #FBBF24;
+      letter-spacing: 2px;
+    }
+
+    .companies-label {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+    }
+
+    .companies-logos {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .company-logo {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      opacity: 0.7;
+      transition: all 0.3s var(--ease);
+    }
+
+    .company-logo:hover {
+      opacity: 1;
+      color: var(--green);
+    }
+
+    /* ============================================
+       SEÇÕES
+       ============================================ */
+    .section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      padding: 0.375rem 1rem;
+      background: rgba(107, 33, 168, 0.2);
+      color: var(--green);
+      border: 1px solid rgba(107, 33, 168, 0.4);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-title .green { color: var(--green); }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       SOBRE
+       ============================================ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text {
+      color: var(--text-muted);
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-mission {
+      background: rgba(107, 33, 168, 0.1);
+      border-left: 3px solid var(--green);
+      padding: 1.5rem;
+      border-radius: 0 12px 12px 0;
+      margin: 2rem 0;
+    }
+
+    .about-mission-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    .about-mission-text {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .about-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 500;
+      padding: 0.75rem;
+      background: rgba(74, 222, 128, 0.03);
+      border: 1px solid rgba(107, 33, 168, 0.2);
+      border-radius: 10px;
+      transition: all 0.3s var(--ease);
+      font-size: 0.9375rem;
+    }
+
+    .about-feature:hover {
+      background: rgba(74, 222, 128, 0.08);
+      border-color: rgba(74, 222, 128, 0.3);
+      transform: translateX(5px);
+    }
+
+    .about-feature i {
+      color: var(--green);
+      font-size: 1.125rem;
+      flex-shrink: 0;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-image {
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+      position: relative;
+      box-shadow: 0 30px 80px rgba(107, 33, 168, 0.4);
+    }
+
+    .about-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(74, 222, 128, 0.3), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(107, 33, 168, 0.5), transparent 50%);
+    }
+
+    .about-image-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .about-image-logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 30px rgba(74, 222, 128, 0.5));
+    }
+
+    .about-image-title {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-image-text {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+    }
+
+    .about-floating-card {
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      background: rgba(26, 11, 46, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      padding: 1.25rem;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: float 6s ease-in-out infinite;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .afc-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--green);
+      color: var(--bg-dark);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .afc-number {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .afc-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .about-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .about-mini-stat {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(107, 33, 168, 0.1);
+      border: 1px solid rgba(107, 33, 168, 0.3);
+      border-radius: 12px;
+    }
+
+    .about-mini-stat-number {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 0.25rem;
+    }
+
+    .about-mini-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* ============================================
+       FORMAÇÕES
+       ============================================ */
+    .formations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .formation-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s var(--ease);
+      border: 1px solid rgba(107, 33, 168, 0.2);
+      cursor: pointer;
+    }
+
+    .formation-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(74, 222, 128, 0.4);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .formation-image {
+      aspect-ratio: 16/10;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .formation-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.08), transparent 50%);
+    }
+
+    /* Grid pattern no card */
+    .formation-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .formation-image.js { background: linear-gradient(135deg, #8B7A00 0%, #3D3400 100%); }
+    .formation-image.react { background: linear-gradient(135deg, #0E7490 0%, #0C4A5E 100%); }
+    .formation-image.node { background: linear-gradient(135deg, #14532D 0%, #052E16 100%); }
+    .formation-image.mobile { background: linear-gradient(135deg, #1E3A8A 0%, #172554 100%); }
+    .formation-image.mba { background: linear-gradient(135deg, #0E7490 0%, #0C4A5E 100%); }
+    .formation-image.escola { background: linear-gradient(135deg, #6B21A8 0%, #3B0764 100%); }
+
+    .formation-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .formation-icon.js-icon { background: linear-gradient(135deg, #FDE047, #EAB308); color: #1a1a1a; }
+    .formation-icon.react-icon { background: linear-gradient(135deg, #67E8F9, #06B6D4); color: white; }
+    .formation-icon.node-icon { background: linear-gradient(135deg, #4ADE80, #22C55E); color: white; }
+    .formation-icon.mobile-icon { background: linear-gradient(135deg, #60A5FA, #3B82F6); color: white; }
+    .formation-icon.mba-icon { background: linear-gradient(135deg, #67E8F9, #06B6D4); color: white; }
+    .formation-icon.escola-icon { background: linear-gradient(135deg, #A855F7, #7C3AED); color: white; }
+
+    .formation-arrow {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      transition: all 0.3s var(--ease);
+    }
+
+    .formation-card:hover .formation-arrow {
+      background: var(--green);
+      color: var(--bg-dark);
+      transform: rotate(-45deg);
+    }
+
+    .formation-content {
+      padding: 2rem;
+    }
+
+    .formation-title {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .formation-description {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       MBA
+       ============================================ */
+    .mba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .mba-content .section-tag { margin-bottom: 1rem; }
+    .mba-content .section-title { text-align: left; margin-bottom: 1rem; }
+    .mba-content .section-subtitle { text-align: left; margin-bottom: 2rem; }
+
+    .mba-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .mba-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(107, 33, 168, 0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(107, 33, 168, 0.2);
+      transition: all 0.3s var(--ease);
+    }
+
+    .mba-feature:hover {
+      background: rgba(107, 33, 168, 0.15);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .mba-feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--green);
+      color: var(--bg-dark);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mba-feature-title {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      font-family: var(--font-mono);
+    }
+
+    .mba-feature-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .mba-visual {
+      position: relative;
+    }
+
+    .mba-card {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+      border-radius: 24px;
+      padding: 3rem;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(107, 33, 168, 0.4);
+    }
+
+    .mba-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(74, 222, 128, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 222, 128, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .mba-card-logo {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mba-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .mba-card-title {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .mba-card-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+    }
+
+    .mba-card-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mba-stat {
+      text-align: center;
+    }
+
+    .mba-stat-number {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green);
+    }
+
+    .mba-stat-label {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ============================================
+       BLOG
+       ============================================ */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .blog-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(107, 33, 168, 0.2);
+      transition: all 0.4s var(--ease);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .blog-image {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .blog-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.2), transparent 70%);
+    }
+
+    .blog-content {
+      padding: 1.5rem;
+    }
+
+    .blog-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+      font-family: var(--font-mono);
+    }
+
+    .blog-meta .category {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .blog-title {
+      font-family: var(--font-mono);
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .blog-excerpt {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       NEWSLETTER
+       ============================================ */
+    .newsletter-section {
+      background: linear-gradient(135deg, rgba(107, 33, 168, 0.2) 0%, rgba(74, 222, 128, 0.05) 100%);
+      border-top: 1px solid rgba(107, 33, 168, 0.3);
+      border-bottom: 1px solid rgba(107, 33, 168, 0.3);
+    }
+
+    .newsletter-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-width: 280px;
+      padding: 1rem 1.5rem;
+      background: rgba(10, 6, 18, 0.6);
+      border: 1px solid rgba(107, 33, 168, 0.3);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      transition: all 0.3s var(--ease);
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--green);
+      background: rgba(10, 6, 18, 0.8);
+    }
+
+    .newsletter-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .newsletter-note {
+      margin-top: 1rem;
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+    }
+
+    /* ============================================
+       ALUNOS / DEPOIMENTOS
+       ============================================ */
+    .students-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .student-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(107, 33, 168, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.4s var(--ease);
+    }
+
+    .student-card:hover {
+      border-color: rgba(74, 222, 128, 0.3);
+      transform: translateY(-6px);
+    }
+
+    .student-rating {
+      display: flex;
+      gap: 0.25rem;
+      color: #FBBF24;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .student-text {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .student-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .student-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--bg-dark);
+      font-size: 1rem;
+    }
+
+    .student-name {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9375rem;
+    }
+
+    .student-role {
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+    }
+
+    /* ============================================
+       CTA FINAL
+       ============================================ */
+    .cta-section {
+      padding: 6rem 0;
+    }
+
+    .cta-content {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, rgba(107, 33, 168, 0.2) 0%, rgba(74, 222, 128, 0.05) 100%);
+      border: 1px solid rgba(107, 33, 168, 0.3);
+      border-radius: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-content::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(74, 222, 128, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(107, 33, 168, 0.3), transparent 50%);
+    }
+
+    .cta-title {
+      font-family: var(--font-mono);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      position: relative;
+      line-height: 1.2;
+    }
+
+    .cta-text {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .cta-note {
+      margin-top: 1.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .cta-note i { color: var(--green); }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      padding: 4rem 0 2rem;
+      border-top: 1px solid rgba(107, 33, 168, 0.2);
+      background: rgba(10, 6, 18, 0.5);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-description {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 1rem 0 1.5rem;
+      max-width: 320px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      background: rgba(107, 33, 168, 0.15);
+      border: 1px solid rgba(107, 33, 168, 0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s var(--ease);
+    }
+
+    .footer-social a:hover {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--bg-dark);
+      transform: translateY(-3px);
+    }
+
+    .footer-title {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: var(--green);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: all 0.3s var(--ease);
+    }
+
+    .footer-links a:hover {
+      color: var(--green);
+      transform: translateX(4px);
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-contact li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-contact i {
+      color: var(--green);
+      width: 16px;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(107, 33, 168, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-heart {
+      color: var(--green);
+      display: inline-block;
+    }
+
+    /* ============================================
+       RESPONSIVIDADE
+       ============================================ */
+    @media (max-width: 1024px) {
+      .hero-container,
+      .about-grid,
+      .mba-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        height: 400px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-list,
+      .header-actions .btn-login {
+        display: none;
+      }
+
+      .menu-toggle { display: flex; }
+
+      .section { padding: 4rem 0; }
+
+      .hero { padding: 6rem 0 3rem; }
+
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+
+      .hero-visual { height: 350px; }
+
+      .about-features { grid-template-columns: 1fr; }
+
+      .about-floating-card {
+        right: 10px;
+        bottom: -20px;
+      }
+
+      .footer-grid { grid-template-columns: 1fr; }
+
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .companies-content { flex-direction: column; gap: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1rem; }
+      .about-stats-row { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================
+       ANIMAÇÕES
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s var(--ease);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       HEADER
+       ============================================ -->
+  <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#home" class="logo">
+        <!-- Logo SVG do DevClub -->
+        <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" rx="8" fill="#6B21A8"/>
+          <!-- Padrão pixelado verde formando DC -->
+          <g fill="#4ADE80">
+            <!-- Linha 1 -->
+            <rect x="15" y="15" width="10" height="10"/>
+            <rect x="30" y="15" width="5" height="5"/>
+            <rect x="40" y="15" width="20" height="5"/>
+            <rect x="65" y="15" width="5" height="5"/>
+            <rect x="75" y="15" width="10" height="10"/>
+            <!-- Linha 2 -->
+            <rect x="15" y="30" width="5" height="15"/>
+            <rect x="25" y="30" width="15" height="5"/>
+            <rect x="45" y="30" width="5" height="5"/>
+            <rect x="55" y="30" width="15" height="5"/>
+            <rect x="75" y="30" width="5" height="5"/>
+            <!-- Linha 3 (D) -->
+            <rect x="15" y="50" width="5" height="5"/>
+            <rect x="25" y="45" width="5" height="20"/>
+            <rect x="35" y="45" width="15" height="5"/>
+            <rect x="35" y="60" width="15" height="5"/>
+            <rect x="50" y="45" width="5" height="20"/>
+            <!-- Linha 3 (C) -->
+            <rect x="60" y="45" width="5" height="5"/>
+            <rect x="70" y="45" width="15" height="5"/>
+            <rect x="70" y="55" width="5" height="5"/>
+            <rect x="70" y="60" width="15" height="5"/>
+            <rect x="60" y="60" width="5" height="5"/>
+            <!-- Linha 4 -->
+            <rect x="15" y="70" width="10" height="5"/>
+            <rect x="30" y="70" width="5" height="10"/>
+            <rect x="40" y="75" width="10" height="5"/>
+            <rect x="55" y="70" width="5" height="5"/>
+            <rect x="65" y="75" width="10" height="5"/>
+            <rect x="80" y="70" width="5" height="10"/>
+          </g>
+        </svg>
+        <span>DevClub</span>
+      </a>
+
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#sobre" class="nav-link">Sobre</a></li>
+          <li><a href="#formacoes" class="nav-link">Formações</a></li>
+          <li><a href="#mba" class="nav-link">MBA</a></li>
+          <li><a href="#blog" class="nav-link">Blog</a></li>
+          <li><a href="#newsletter" class="nav-link">Newsletter</a></li>
+          <li><a href="#alunos" class="nav-link">Nossos Alunos</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#login" class="btn-login">Login</a>
+        <a href="#matricula" class="btn-matricula">
+          <i class="fas fa-arrow-right"></i>
+          <span>Matricule-se</span>
+        </a>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================================
+         HERO
+         ============================================ -->
+    <section class="hero" id="home">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-logo">
+            <a href="#home" class="logo">
+              <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="8" fill="#6B21A8"/>
+                <g fill="#4ADE80">
+                  <rect x="15" y="15" width="10" height="10"/>
+                  <rect x="30" y="15" width="5" height="5"/>
+                  <rect x="40" y="15" width="20" height="5"/>
+                  <rect x="65" y="15" width="5" height="5"/>
+                  <rect x="75" y="15" width="10" height="10"/>
+                  <rect x="15" y="30" width="5" height="15"/>
+                  <rect x="25" y="30" width="15" height="5"/>
+                  <rect x="45" y="30" width="5" height="5"/>
+                  <rect x="55" y="30" width="15" height="5"/>
+                  <rect x="75" y="30" width="5" height="5"/>
+                  <rect x="15" y="50" width="5" height="5"/>
+                  <rect x="25" y="45" width="5" height="20"/>
+                  <rect x="35" y="45" width="15" height="5"/>
+                  <rect x="35" y="60" width="15" height="5"/>
+                  <rect x="50" y="45" width="5" height="20"/>
+                  <rect x="60" y="45" width="5" height="5"/>
+                  <rect x="70" y="45" width="15" height="5"/>
+                  <rect x="70" y="55" width="5" height="5"/>
+                  <rect x="70" y="60" width="15" height="5"/>
+                  <rect x="60" y="60" width="5" height="5"/>
+                  <rect x="15" y="70" width="10" height="5"/>
+                  <rect x="30" y="70" width="5" height="10"/>
+                  <rect x="40" y="75" width="10" height="5"/>
+                  <rect x="55" y="70" width="5" height="5"/>
+                  <rect x="65" y="75" width="10" height="5"/>
+                  <rect x="80" y="70" width="5" height="10"/>
+                </g>
+              </svg>
+              <span>DevClub</span>
+            </a>
+          </div>
+
+          <div class="hero-badge">A Escola das Profissões do Futuro</div>
+
+          <h1 class="hero-title">
+            Transforme sua carreira com<br>
+            <span class="green">FullStack</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Aprenda as tecnologias mais demandadas do mercado com metodologia prática, direto ao ponto e de forma simples.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#formacoes" class="btn-primary">
+              <i class="fas fa-arrow-right"></i>
+              <span>Ver Formações</span>
+            </a>
+            <a href="#sobre" class="btn-secondary">
+              <span>Ver mais</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-float-card card-1">
+            <div class="float-card-header">
+              <div class="float-card-dots"><span></span><span></span><span></span></div>
+              <span>app.js</span>
+            </div>
+            <pre class="float-card-code"><code><span class="kw">const</span> dev = {
+  <span class="prop">nome</span>: <span class="str">"Você"</span>,
+  <span class="prop">stack</span>: [<span class="str">"React"</span>, <span class="str">"Node"</span>],
+  <span class="prop">sonho</span>: <span class="str">"realizado"</span>
+};</code></pre>
+          </div>
+
+          <div class="hero-float-card card-2">
+            <div class="float-stat">
+              <div class="float-stat-icon"></div>
+              <div>
+                <span class="float-stat-value">+127%</span>
+                <span class="float-stat-label">Empregabilidade</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-float-card card-3">
+            <div class="float-notif">
+              <div class="float-notif-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <div>
+                <span class="float-notif-title">Nova conquista!</span>
+                <span class="float-notif-text">Você completou React</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         BARRA DE EMPRESAS
+         ============================================ -->
+    <section class="companies-bar">
+      <div class="container">
+        <div class="companies-content">
+          <div class="companies-rating">
+            <span class="stars">★★★★★</span>
+            <span>Reconhecimento 5 estrelas no mercado!</span>
+          </div>
+          <span class="companies-label">Alunos contratados por empresas como:</span>
+          <div class="companies-logos">
+            <span class="company-logo">Nubank</span>
+            <span class="company-logo">Stone</span>
+            <span class="company-logo">TOTVS</span>
+            <span class="company-logo">Unimed</span>
+            <span class="company-logo">CVC</span>
+            <span class="company-logo">iFood</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SOBRE
+         ============================================ -->
+    <section class="section" id="sobre">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-content reveal">
+            <span class="section-tag">Sobre o DevClub</span>
+            <h2 class="section-title">
+              A escola que forma os <span class="green">devs do futuro</span>
+            </h2>
+            <p class="about-text">
+              O DevClub nasceu em 2019 com uma missão clara: democratizar o ensino de tecnologia no Brasil. Somos mais que uma escola — somos uma comunidade de mais de 40.000 alunos transformando suas carreiras todos os dias.
+            </p>
+            <p class="about-text">
+              Nossa metodologia é baseada em projetos reais, mentoria com profissionais do mercado e uma comunidade ativa que te apoia em cada etapa da jornada.
+            </p>
+
+            <div class="about-mission">
+              <div class="about-mission-title">
+                <i class="fas fa-bullseye"></i>
+                Nossa Missão
+              </div>
+              <p class="about-mission-text">
+                "Formar desenvolvedores completos, prontos para o mercado, através de uma educação prática, acessível e de alta qualidade."
+              </p>
+            </div>
+
+            <div class="about-features">
+              <div class="about-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Mentoria especializada</span>
+              </div>
+              <div class="about-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Projetos reais</span>
+              </div>
+              <div class="about-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Comunidade ativa</span>
+              </div>
+              <div class="about-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Certificado reconhecido</span>
+              </div>
+              <div class="about-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Suporte contínuo</span>
+              </div>
+              <div class="about-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Acesso vitalício</span>
+              </div>
+            </div>
+
+            <div class="about-stats-row">
+              <div class="about-mini-stat">
+                <span class="about-mini-stat-number">40k+</span>
+                <span class="about-mini-stat-label">Alunos</span>
+              </div>
+              <div class="about-mini-stat">
+                <span class="about-mini-stat-number">95%</span>
+                <span class="about-mini-stat-label">Satisfação</span>
+              </div>
+              <div class="about-mini-stat">
+                <span class="about-mini-stat-number">5k+</span>
+                <span class="about-mini-stat-label">Projetos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-visual reveal">
+            <div class="about-image">
+              <div class="about-image-content">
+                <svg class="about-image-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" rx="8" fill="white"/>
+                  <g fill="#4ADE80">
+                    <rect x="15" y="15" width="10" height="10"/>
+                    <rect x="30" y="15" width="5" height="5"/>
+                    <rect x="40" y="15" width="20" height="5"/>
+                    <rect x="65" y="15" width="5" height="5"/>
+                    <rect x="75" y="15" width="10" height="10"/>
+                    <rect x="15" y="30" width="5" height="15"/>
+                    <rect x="25" y="30" width="15" height="5"/>
+                    <rect x="45" y="30" width="5" height="5"/>
+                    <rect x="55" y="30" width="15" height="5"/>
+                    <rect x="75" y="30" width="5" height="5"/>
+                    <rect x="15" y="50" width="5" height="5"/>
+                    <rect x="25" y="45" width="5" height="20"/>
+                    <rect x="35" y="45" width="15" height="5"/>
+                    <rect x="35" y="60" width="15" height="5"/>
+                    <rect x="50" y="45" width="5" height="20"/>
+                    <rect x="60" y="45" width="5" height="5"/>
+                    <rect x="70" y="45" width="15" height="5"/>
+                    <rect x="70" y="55" width="5" height="5"/>
+                    <rect x="70" y="60" width="15" height="5"/>
+                    <rect x="60" y="60" width="5" height="5"/>
+                    <rect x="15" y="70" width="10" height="5"/>
+                    <rect x="30" y="70" width="5" height="10"/>
+                    <rect x="40" y="75" width="10" height="5"/>
+                    <rect x="55" y="70" width="5" height="5"/>
+                    <rect x="65" y="75" width="10" height="5"/>
+                    <rect x="80" y="70" width="5" height="10"/>
+                  </g>
+                </svg>
+                <h3 class="about-image-title">Desde 2019</h3>
+                <p class="about-image-text">Transformando vidas através da tecnologia</p>
+              </div>
+            </div>
+            <div class="about-floating-card">
+              <div class="afc-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div>
+                <span class="afc-number">40.231</span>
+                <span class="afc-label">Alunos ativos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         FORMAÇÕES
+         ============================================ -->
+    <section class="section" id="formacoes">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Formações</span>
+          <h2 class="section-title">
+            Escolha sua <span class="green">trilha de aprendizado</span>
+          </h2>
+          <p class="section-subtitle">
+            Formações completas do zero ao avançado, com projetos reais e mentoria especializada.
+          </p>
+        </div>
+
+        <div class="formations-grid">
+          <!-- Fullstack JavaScript -->
+          <article class="formation-card reveal">
+            <div class="formation-image js">
+              <div class="formation-icon js-icon">JS</div>
+              <div class="formation-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+            </div>
+            <div class="formation-content">
+              <h3 class="formation-title">Formação Fullstack JavaScript</h3>
+              <p class="formation-description">
+                Domine o desenvolvimento web completo com JavaScript. Aprenda desde o front-end com React até o back-end com Node.js, incluindo bancos de dados e deploy.
+              </p>
+            </div>
+          </article>
+
+          <!-- Front-end -->
+          <article class="formation-card reveal">
+            <div class="formation-image react">
+              <div class="formation-icon react-icon">
+                <i class="fab fa-react"></i>
+              </div>
+              <div class="formation-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+            </div>
+            <div class="formation-content">
+              <h3 class="formation-title">Formação Front-end</h3>
+              <p class="formation-description">
+                Especialize-se em desenvolvimento front-end moderno com React. Crie interfaces incríveis e aplicações web performáticas.
+              </p>
+            </div>
+          </article>
+
+          <!-- Back-end -->
+          <article class="formation-card reveal">
+            <div class="formation-image node">
+              <div class="formation-icon node-icon">
+                <i class="fab fa-node-js"></i>
+              </div>
+              <div class="formation-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+            </div>
+            <div class="formation-content">
+              <h3 class="formation-title">Formação Back-end</h3>
+              <p class="formation-description">
+                Torne-se um especialista em desenvolvimento back-end com Node.js. Construa APIs robustas e escaláveis.
+              </p>
+            </div>
+          </article>
+
+          <!-- Mobile -->
+          <article class="formation-card reveal">
+            <div class="formation-image mobile">
+              <div class="formation-icon mobile-icon">
+                <i class="fab fa-react"></i>
+              </div>
+              <div class="formation-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+            </div>
+            <div class="formation-content">
+              <h3 class="formation-title">Formação Mobile</h3>
+              <p class="formation-description">
+                Desenvolva aplicativos móveis nativos para iOS e Android usando React Native. Publique seu app nas lojas.
+              </p>
+            </div>
+          </article>
+
+          <!-- MBA -->
+          <article class="formation-card reveal">
+            <div class="formation-image mba">
+              <div class="formation-icon mba-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="formation-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+            </div>
+            <div class="formation-content">
+              <h3 class="formation-title">MBA e Pós Graduação em Tecnologia</h3>
+              <p class="formation-description">
+                Aprofunde seus conhecimentos com a pós-graduação em desenvolvimento FullStack. Certificado reconhecido pelo MEC.
+              </p>
+            </div>
+          </article>
+
+          <!-- Escola -->
+          <article class="formation-card reveal">
+            <div class="formation-image escola">
+              <div class="formation-icon escola-icon">
+                <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" rx="8" fill="white"/>
+                  <g fill="#6B21A8">
+                    <rect x="15" y="15" width="10" height="10"/>
+                    <rect x="30" y="15" width="5" height="5"/>
+                    <rect x="40" y="15" width="20" height="5"/>
+                    <rect x="65" y="15" width="5" height="5"/>
+                    <rect x="75" y="15" width="10" height="10"/>
+                    <rect x="15" y="30" width="5" height="15"/>
+                    <rect x="25" y="30" width="15" height="5"/>
+                    <rect x="45" y="30" width="5" height="5"/>
+                    <rect x="55" y="30" width="15" height="5"/>
+                    <rect x="75" y="30" width="5" height="5"/>
+                    <rect x="15" y="50" width="5" height="5"/>
+                    <rect x="25" y="45" width="5" height="20"/>
+                    <rect x="35" y="45" width="15" height="5"/>
+                    <rect x="35" y="60" width="15" height="5"/>
+                    <rect x="50" y="45" width="5" height="20"/>
+                    <rect x="60" y="45" width="5" height="5"/>
+                    <rect x="70" y="45" width="15" height="5"/>
+                    <rect x="70" y="55" width="5" height="5"/>
+                    <rect x="70" y="60" width="15" height="5"/>
+                    <rect x="60" y="60" width="5" height="5"/>
+                    <rect x="15" y="70" width="10" height="5"/>
+                    <rect x="30" y="70" width="5" height="10"/>
+                    <rect x="40" y="75" width="10" height="5"/>
+                    <rect x="55" y="70" width="5" height="5"/>
+                    <rect x="65" y="75" width="10" height="5"/>
+                    <rect x="80" y="70" width="5" height="10"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="formation-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+            </div>
+            <div class="formation-content">
+              <h3 class="formation-title">A Escola das Profissões do Futuro</h3>
+              <p class="formation-description">
+                Conheça mais sobre a nossa escola de programação DevClub. Descubra como estamos formando a próxima geração de devs.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         MBA
+         ============================================ -->
+    <section class="section" id="mba">
+      <div class="container">
+        <div class="mba-grid">
+          <div class="mba-content reveal">
+            <span class="section-tag">MBA & Pós-Graduação</span>
+            <h2 class="section-title">
+              Eleve sua carreira ao <span class="green">próximo nível</span>
+            </h2>
+            <p class="section-subtitle">
+              Pós-graduação reconhecida pelo MEC em Desenvolvimento FullStack. Para quem quer se destacar no mercado.
+            </p>
+
+            <div class="mba-features">
+              <div class="mba-feature">
+                <div class="mba-feature-icon"><i class="fas fa-certificate"></i></div>
+                <div>
+                  <div class="mba-feature-title">Certificado MEC</div>
+                  <div class="mba-feature-text">Reconhecido nacionalmente, válido para concursos e progressão.</div>
+                </div>
+              </div>
+              <div class="mba-feature">
+                <div class="mba-feature-icon"><i class="fas fa-users"></i></div>
+                <div>
+                  <div class="mba-feature-title">Mentoria Executiva</div>
+                  <div class="mba-feature-text">Acompanhamento de CTOs e tech leads de grandes empresas.</div>
+                </div>
+              </div>
+              <div class="mba-feature">
+                <div class="mba-feature-icon"><i class="fas fa-briefcase"></i></div>
+                <div>
+                  <div class="mba-feature-title">Networking Premium</div>
+                  <div class="mba-feature-text">Conecte-se com profissionais de Nubank, iFood, Stone e mais.</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="#matricula" class="btn-primary">
+              <i class="fas fa-arrow-right"></i>
+              <span>Quero me inscrever</span>
+            </a>
+          </div>
+
+          <div class="mba-visual reveal">
+            <div class="mba-card">
+              <svg class="mba-card-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="8" fill="white"/>
+                <g fill="#4ADE80">
+                  <rect x="15" y="15" width="10" height="10"/>
+                  <rect x="30" y="15" width="5" height="5"/>
+                  <rect x="40" y="15" width="20" height="5"/>
+                  <rect x="65" y="15" width="5" height="5"/>
+                  <rect x="75" y="15" width="10" height="10"/>
+                  <rect x="15" y="30" width="5" height="15"/>
+                  <rect x="25" y="30" width="15" height="5"/>
+                  <rect x="45" y="30" width="5" height="5"/>
+                  <rect x="55" y="30" width="15" height="5"/>
+                  <rect x="75" y="30" width="5" height="5"/>
+                  <rect x="15" y="50" width="5" height="5"/>
+                  <rect x="25" y="45" width="5" height="20"/>
+                  <rect x="35" y="45" width="15" height="5"/>
+                  <rect x="35" y="60" width="15" height="5"/>
+                  <rect x="50" y="45" width="5" height="20"/>
+                  <rect x="60" y="45" width="5" height="5"/>
+                  <rect x="70" y="45" width="15" height="5"/>
+                  <rect x="70" y="55" width="5" height="5"/>
+                  <rect x="70" y="60" width="15" height="5"/>
+                  <rect x="60" y="60" width="5" height="5"/>
+                  <rect x="15" y="70" width="10" height="5"/>
+                  <rect x="30" y="70" width="5" height="10"/>
+                  <rect x="40" y="75" width="10" height="5"/>
+                  <rect x="55" y="70" width="5" height="5"/>
+                  <rect x="65" y="75" width="10" height="5"/>
+                  <rect x="80" y="70" width="5" height="10"/>
+                </g>
+              </svg>
+
+              <div class="mba-card-content">
+                <h3 class="mba-card-title">MBA FullStack</h3>
+                <p class="mba-card-subtitle">18 meses • 100% online • Certificado MEC</p>
+              </div>
+
+              <div class="mba-card-stats">
+                <div class="mba-stat">
+                  <span class="mba-stat-number">18</span>
+                  <span class="mba-stat-label">Meses</span>
+                </div>
+                <div class="mba-stat">
+                  <span class="mba-stat-number">360h</span>
+                  <span class="mba-stat-label">Carga</span>
+                </div>
+                <div class="mba-stat">
+                  <span class="mba-stat-number">12x</span>
+                  <span class="mba-stat-label">Parcelas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         BLOG
+         ============================================ -->
+    <section class="section" id="blog">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Blog</span>
+          <h2 class="section-title">
+            Conteúdo <span class="green">gratuito</span> para devs
+          </h2>
+          <p class="section-subtitle">
+            Artigos, tutoriais e novidades do mundo da tecnologia.
+          </p>
+        </div>
+
+        <div class="blog-grid">
+          <article class="blog-card reveal">
+            <div class="blog-image">🚀</div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="category">Carreira</span>
+                <span>12 Jul 2026</span>
+                <span>5 min</span>
+              </div>
+              <h3 class="blog-title">Como conseguir sua primeira vaga em 2026</h3>
+              <p class="blog-excerpt">Dicas práticas de quem já contratou mais de 200 devs juniors no último ano.</p>
+            </div>
+          </article>
+
+          <article class="blog-card reveal">
+            <div class="blog-image" style="background: linear-gradient(135deg, #0E7490 0%, #0C4A5E 100%);">⚛️</div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="category">React</span>
+                <span>10 Jul 2026</span>
+                <span>8 min</span>
+              </div>
+              <h3 class="blog-title">React 19: tudo que você precisa saber</h3>
+              <p class="blog-excerpt">As novas features que vão mudar a forma como você desenvolve aplicações.</p>
+            </div>
+          </article>
+
+          <article class="blog-card reveal">
+            <div class="blog-image" style="background: linear-gradient(135deg, #14532D 0%, #052E16 100%);"></div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="category">Node.js</span>
+                <span>08 Jul 2026</span>
+                <span>6 min</span>
+              </div>
+              <h3 class="blog-title">APIs REST vs GraphQL: qual escolher?</h3>
+              <p class="blog-excerpt">Um comparativo prático para te ajudar a decidir no seu próximo projeto.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         NEWSLETTER
+         ============================================ -->
+    <section class="section newsletter-section" id="newsletter">
+      <div class="container">
+        <div class="newsletter-content reveal">
+          <span class="section-tag">Newsletter</span>
+          <h2 class="section-title">
+            Receba conteúdo <span class="green">exclusivo</span> toda semana
+          </h2>
+          <p class="section-subtitle">
+            Dicas de carreira, tutoriais e novidades direto no seu e-mail. Sem spam, prometemos.
+          </p>
+
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Inscrição realizada com sucesso!');">
+            <input type="email" class="newsletter-input" placeholder="seu@email.com" required>
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-paper-plane"></i>
+              <span>Inscrever</span>
+            </button>
+          </form>
+
+          <p class="newsletter-note">
+            <i class="fas fa-lock"></i>
+            Seus dados estão seguros. Cancele quando quiser.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         NOSSOS ALUNOS
+         ============================================ -->
+    <section class="section" id="alunos">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Nossos Alunos</span>
+          <h2 class="section-title">
+            Histórias que <span class="green">inspiram</span>
+          </h2>
+          <p class="section-subtitle">
+            Veja o que nossos alunos têm a dizer sobre a jornada no DevClub.
+          </p>
+        </div>
+
+        <div class="students-grid">
+          <div class="student-card reveal">
+            <div class="student-rating">★★★★★</div>
+            <p class="student-text">
+              "Em 8 meses consegui minha primeira vaga como dev front-end no Nubank. O método do DevClub é simplesmente incrível — a comunidade e a mentoria fizeram toda a diferença."
+            </p>
+            <div class="student-author">
+              <div class="student-avatar">MS</div>
+              <div>
+                <span class="student-name">Marina Silva</span>
+                <span class="student-role">Front-end Developer @ Nubank</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="student-card reveal">
+            <div class="student-rating">★★★★★</div>
+            <p class="student-text">
+              "Saí do zero absoluto para trabalhar em uma startup internacional. Os projetos reais me deram a confiança que eu precisava para encarar as entrevistas técnicas."
+            </p>
+            <div class="student-author">
+              <div class="student-avatar">RC</div>
+              <div>
+                <span class="student-name">Rafael Costa</span>
+                <span class="student-role">Full-stack Developer @ Startup XYZ</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="student-card reveal">
+            <div class="student-rating">★★★★★</div>
+            <p class="student-text">
+              "O networking que fiz no DevClub mudou minha carreira. Conheci meu sócio atual lá e hoje temos nossa própria empresa de tecnologia faturando 6 dígitos."
+            </p>
+            <div class="student-author">
+              <div class="student-avatar">JM</div>
+              <div>
+                <span class="student-name">Juliana Mendes</span>
+                <span class="student-role">Co-founder @ TechStartup</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="student-card reveal">
+            <div class="student-rating">★★★★★</div>
+            <p class="student-text">
+              "A didática é impecável. Cada aula é um passo claro em direção ao objetivo. Recomendo para qualquer pessoa que quer entrar em TI de verdade, sem enrolação."
+            </p>
+            <div class="student-author">
+              <div class="student-avatar">PA</div>
+              <div>
+                <span class="student-name">Pedro Almeida</span>
+                <span class="student-role">Backend Developer @ iFood</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="student-card reveal">
+            <div class="student-rating">★★★★★</div>
+            <p class="student-text">
+              "Fiz o MBA e foi a melhor decisão da minha carreira. O certificado me abriu portas em concursos e o networking me conectou com oportunidades incríveis."
+            </p>
+            <div class="student-author">
+              <div class="student-avatar">CS</div>
+              <div>
+                <span class="student-name">Camila Santos</span>
+                <span class="student-role">Tech Lead @ Stone</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="student-card reveal">
+            <div class="student-rating">★★★★★</div>
+            <p class="student-text">
+              "Comecei sem saber nada de programação e hoje ganho 3x mais como dev. O DevClub não ensina só código, ensina a pensar como um desenvolvedor profissional."
+            </p>
+            <div class="student-author">
+              <div class="student-avatar">LF</div>
+              <div>
+                <span class="student-name">Lucas Ferreira</span>
+                <span class="student-role">Mobile Developer @ TOTVS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA FINAL
+         ============================================ -->
+    <section class="cta-section" id="matricula">
+      <div class="container">
+        <div class="cta-content reveal">
+          <h2 class="cta-title">
+            Pronto para transformar sua<br>
+            <span class="green">carreira em tecnologia</span>?
+          </h2>
+          <p class="cta-text">
+            Junte-se a mais de 40.000 alunos que já estão construindo o futuro. Sua jornada como desenvolvedor de elite começa com um único passo.
+          </p>
+          <a href="#" class="btn-primary btn-lg">
+            <i class="fas fa-arrow-right"></i>
+            <span>Matricule-se agora</span>
+          </a>
+          <p class="cta-note">
+            <i class="fas fa-shield-alt"></i>
+            7 dias de garantia. Cancele quando quiser.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" class="logo">
+            <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="8" fill="#6B21A8"/>
+              <g fill="#4ADE80">
+                <rect x="15" y="15" width="10" height="10"/>
+                <rect x="30" y="15" width="5" height="5"/>
+                <rect x="40" y="15" width="20" height="5"/>
+                <rect x="65" y="15" width="5" height="5"/>
+                <rect x="75" y="15" width="10" height="10"/>
+                <rect x="15" y="30" width="5" height="15"/>
+                <rect x="25" y="30" width="15" height="5"/>
+                <rect x="45" y="30" width="5" height="5"/>
+                <rect x="55" y="30" width="15" height="5"/>
+                <rect x="75" y="30" width="5" height="5"/>
+                <rect x="15" y="50" width="5" height="5"/>
+                <rect x="25" y="45" width="5" height="20"/>
+                <rect x="35" y="45" width="15" height="5"/>
+                <rect x="35" y="60" width="15" height="5"/>
+                <rect x="50" y="45" width="5" height="20"/>
+                <rect x="60" y="45" width="5" height="5"/>
+                <rect x="70" y="45" width="15" height="5"/>
+                <rect x="70" y="55" width="5" height="5"/>
+                <rect x="70" y="60" width="15" height="5"/>
+                <rect x="60" y="60" width="5" height="5"/>
+                <rect x="15" y="70" width="10" height="5"/>
+                <rect x="30" y="70" width="5" height="10"/>
+                <rect x="40" y="75" width="10" height="5"/>
+                <rect x="55" y="70" width="5" height="5"/>
+                <rect x="65" y="75" width="10" height="5"/>
+                <rect x="80" y="70" width="5" height="10"/>
+              </g>
+            </svg>
+            <span>DevClub</span>
+          </a>
+          <p class="footer-description">
+            A escola das profissões do futuro. Transformando vidas através da tecnologia desde 2019.
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Plataforma</h3>
+          <ul class="footer-links">
+            <li><a href="#sobre">Sobre nós</a></li>
+            <li><a href="#formacoes">Formações</a></li>
+            <li><a href="#mba">MBA</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#alunos">Nossos Alunos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Suporte</h3>
+          <ul class="footer-links">
+            <li><a href="#">Central de ajuda</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Termos de uso</a></li>
+            <li><a href="#">Privacidade</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Contato</h3>
+          <ul class="footer-contact">
+            <li><i class="fas fa-envelope"></i><span>contato@devclub.com.br</span></li>
+            <li><i class="fab fa-whatsapp"></i><span>(11) 99999-9999</span></li>
+            <li><i class="fas fa-map-marker-alt"></i><span>São Paulo, Brasil</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 DevClub. Todos os direitos reservados.</p>
+        <p>Feito com <span class="footer-heart">❤</span> para desenvolvedores</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+
+    sections.forEach(section => navObserver.observe(section));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+
+
+</body>
+</html>
